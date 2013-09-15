@@ -1,17 +1,11 @@
+Our malloc implements a single extended list to store all the free blocks. 
 
- Our malloc implements a single extended list to store all the free blocks. In the beginning we
- initiate the heap with mm_init, creating a prologue block and epilogue footer for alignments purposes.
- We have a global variable called heap_listp that points to the "payload"(technically 0) of the prologue block.
- This is what we will use to point to the blocks in the heap.
+In the beginning we initiate the heap with mm_init, creating a prologue block and epilogue footer for alignments purposes. 
 
- When malloc is called, do a first-fit search of our global_list (aka the extended list) to find
- a place that will fit. Once the proper block is found, the block becomes allocated. BUT, if the free block
- size minus the size we are asking for is big enough to hold another block, we split that block and add it
- to our free list. Otherwise, we give the entire free block to the requested malloc.
+We have a global variable called heap_listp that points to the "payload"(technically 0) of the prologue block. This is what we will use to point to the blocks in the heap.
 
- Upon freeing, we simply free the block, but the most important thing here is the coalescing issue. In our
- coalesce method we do checks to the previous and next block of the current pointer, and then coalesce the
- necessary blocks.
+When malloc is called, do a first-fit search of our global_list (aka the extended list) to find a place that will fit. Once the proper block is found, the block becomes allocated. BUT, if the free block size minus the size we are asking for is big enough to hold another block, we split that block and add it to our free list. Otherwise, we give the entire free block to the requested malloc.
 
- We also wrote a heap checker to test the heap's consistency. It simply runs tests to make sure the the pointers
- in the heap point to valid heap addresses, the free list contains free blocks, etc. 
+Upon freeing, we simply free the block, but the most important thing here is the coalescing issue. In our coalesce method we do checks to the previous and next block of the current pointer, and then coalesce the necessary blocks.
+
+ We also wrote a heap checker to test the heap's consistency. It simply runs tests to make sure the the pointers in the heap point to valid heap addresses, the free list contains free blocks, etc. 
